@@ -6,24 +6,17 @@ This container is built from ubuntu:trusty using couchdb from ppa:couchdb/stable
 
 ### Using the container.
 
-Build the container
-
-    docker build -t local/couchdb .
-
 Run the container.
 
-    docker run --name couchdb -d -P local/couchdb
+    docker run -d --name couchdb tortxof/couchdb
 
-### Using the container with a separate data container.
+Create a data container.
 
-Create the data container.
+    docker create --name couchdb-data --volumes-from couchdb busybox
 
-    docker create -v /var/lib/couchdb --name couchdb-data ubuntu:trusty
+Replace with an updated container.
 
-Build the couchdb container as above.
-
-    docker build -t local/couchdb .
-
-Run the container.
-
-    docker run --name couchdb -d -P --volumes-from couchdb-data local/couchdb
+    docker pull tortxof/couchdb
+    docker stop couchdb
+    docker rm couchdb
+    docker run -d --name couchdb --volumes-from couchdb-data tortxof/couchdb
