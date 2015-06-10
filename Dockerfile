@@ -1,10 +1,11 @@
 FROM ubuntu:trusty
 MAINTAINER Daniel Jones <tortxof@gmail.com>
 
-RUN apt-get install -y software-properties-common && \
+RUN apt-get install -y --no-install-recommends software-properties-common && \
     add-apt-repository ppa:couchdb/stable -y && \
     apt-get update && \
-    apt-get install -y supervisor couchdb && \
+    apt-get install -y --no-install-recommends supervisor couchdb && \
+    apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
 RUN echo '[httpd]\nbind_address = 0.0.0.0' > /etc/couchdb/local.d/docker.ini
